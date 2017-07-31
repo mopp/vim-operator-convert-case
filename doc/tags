@@ -1,0 +1,10 @@
+<Plug>(operator-convert-case-lower-camel)	operator-convert-case.txt	/*<Plug>(operator-convert-case-lower-camel)*
+<Plug>(operator-convert-case-lower-snake)	operator-convert-case.txt	/*<Plug>(operator-convert-case-lower-snake)*
+<Plug>(operator-convert-case-upper-camel)	operator-convert-case.txt	/*<Plug>(operator-convert-case-upper-camel)*
+<Plug>(operator-convert-case-upper-snake)	operator-convert-case.txt	/*<Plug>(operator-convert-case-upper-snake)*
+operator-convert-case	operator-convert-case.txt	/*operator-convert-case*
+operator-convert-case-contents	operator-convert-case.txt	/*operator-convert-case-contents*
+operator-convert-case-example	operator-convert-case.txt	/*operator-convert-case-example*
+operator-convert-case-introduction	operator-convert-case.txt	/*operator-convert-case-introduction*
+operator-convert-case-mappings	operator-convert-case.txt	/*operator-convert-case-mappings*
+operator-convert-case.txt	operator-convert-case.txt	/*operator-convert-case.txt*

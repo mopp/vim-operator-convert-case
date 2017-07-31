@@ -1,0 +1,89 @@
+*operator-convert-case.txt*
+
+Author:  mopp
+License: MIT
+Version: 0.1
+
+
+==============================================================================
+CONTENTS                                  *operator-convert-case-contents*
+    Introduction                          |operator-convert-case-introduction|
+    Mappings                               |operator-convert-case-mappings|
+
+
+==============================================================================
+INTRODUCTION                              *operator-convert-case-introduction*
+
+*operator-convert-case* is a Vim plugin to provide some operators to convert
+a word case to another word case.
+
+There are some convertion examples.
+To lower_snake_case:
+    lower_snake_case -> lower_snake_case
+    UPPER_SNAKE_CASE -> upper_snake_case
+    UpperCamelCase   -> upper_camel_case
+    lowerCamelCase   -> lower_camel_case
+
+To UPPER_SNAKE_CASE
+    lower_snake_case -> LOWER_SNAKE_CASE
+    UPPER_SNAKE_CASE -> UPPER_SNAKE_CASE
+    UpperCamelCase   -> UPPER_CAMEL_CASE
+    lowerCamelCase   -> LOWER_CAMEL_CASE
+
+To lowerCamelCase
+    lower_snake_case -> lowerSnakeCase
+    UPPER_SNAKE_CASE -> upperSnakeCase
+    UpperCamelCase   -> upperCamelCase
+    lowerCamelCase   -> lowerCamelCase
+
+To UpperCamelCase
+    lower_snake_case -> LowerSnakeCase
+    UPPER_SNAKE_CASE -> UpperSnakeCase
+    UpperCamelCase   -> UpperCamelCase
+    lowerCamelCase   -> LowerCamelCase
+
+Requirements:
+- |operator-user| 0.1.0 or later
+  https://github.com/kana/vim-operator-user
+
+Latest version:
+https://github.com/mopp/vim-operator-convert-case.txt
+
+
+
+
+==============================================================================
+MAPPINGS                                      *operator-convert-case-mappings*
+
+<Plug>(operator-convert-case-lower-camel){motion} *<Plug>(operator-convert-case-lower-camel)*
+    Convert text that {motion} into lowerCamelCase.
+
+<Plug>(operator-convert-case-upper-camel){motion} *<Plug>(operator-convert-case-upper-camel)*
+    Convert text that {motion} into UpperCamelCase.
+
+<Plug>(operator-convert-case-lower-snake){motion} *<Plug>(operator-convert-case-lower-snake)*
+    Convert text that {motion} into lower_snake_case.
+
+<Plug>(operator-convert-case-upper-snake){motion} *<Plug>(operator-convert-case-upper-snake)*
+    Convert text that {motion} into upper_snake_case.
+
+
+
+
+==============================================================================
+EXAMPLE                                        *operator-convert-case-example*
+
+Here is an mapping example.
+>
+    nmap <Leader>,cl <Plug>(operator-convert-case-lower-camel)
+    nmap <Leader>,cu <Plug>(operator-convert-case-upper-camel)
+    nmap <Leader>,sl <Plug>(operator-convert-case-lower-snake)
+    nmap <Leader>,su <Plug>(operator-convert-case-upper-snake)
+<
+
+
+
+
+==============================================================================
+
+vim:ts=4:ft=help:norl:
