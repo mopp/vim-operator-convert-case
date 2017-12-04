@@ -9,6 +9,7 @@ Version: 0.1
 CONTENTS                                  *operator-convert-case-contents*
     Introduction                          |operator-convert-case-introduction|
     Mappings                               |operator-convert-case-mappings|
+    Commands                               |operator-convert-case-commands|
 
 
 ==============================================================================
@@ -45,9 +46,11 @@ To UpperCamelCase
 Requirements:
 - |operator-user| 0.1.0 or later
   https://github.com/kana/vim-operator-user
+- |vim-repeat|
+  https://github.com/tpope/vim-repeat
 
 Latest version:
-https://github.com/mopp/vim-operator-convert-case.txt
+https://github.com/mopp/vim-operator-convert-case.git
 
 
 
@@ -66,6 +69,28 @@ MAPPINGS                                      *operator-convert-case-mappings*
 
 <Plug>(operator-convert-case-upper-snake){motion} *<Plug>(operator-convert-case-upper-snake)*
     Convert text that {motion} into upper_snake_case.
+
+<Plug>(operator-convert-convert) *<Plug>(operator-convert-convert)*
+    See |:ConvertCase|
+    This commands supports . command using |vim-repeat|.
+
+<Plug>(operator-convert-toggle-upper-lower) *<Plug>(operator-convert-toggle-upper-lower)*
+    See |:ToggleUpperLower|
+    This commands supports . command using |vim-repeat|.
+
+
+
+
+==============================================================================
+COMMANDS                                        *operator-convert-case-commands*
+
+                                                *:ToggleUpperLower*
+:ToggleUpperLower
+    Toggle the word under the cursor between Upper case and lower case.
+
+                                                *:ConvertCase*
+:ConvertCase
+    Convert the case of the word.
 
 
 

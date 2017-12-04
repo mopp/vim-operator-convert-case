@@ -1,8 +1,13 @@
+:ConvertCase	operator-convert-case.txt	/*:ConvertCase*
+:ToggleUpperLower	operator-convert-case.txt	/*:ToggleUpperLower*
 <Plug>(operator-convert-case-lower-camel)	operator-convert-case.txt	/*<Plug>(operator-convert-case-lower-camel)*
 <Plug>(operator-convert-case-lower-snake)	operator-convert-case.txt	/*<Plug>(operator-convert-case-lower-snake)*
 <Plug>(operator-convert-case-upper-camel)	operator-convert-case.txt	/*<Plug>(operator-convert-case-upper-camel)*
 <Plug>(operator-convert-case-upper-snake)	operator-convert-case.txt	/*<Plug>(operator-convert-case-upper-snake)*
+<Plug>(operator-convert-convert)	operator-convert-case.txt	/*<Plug>(operator-convert-convert)*
+<Plug>(operator-convert-toggle-upper-lower)	operator-convert-case.txt	/*<Plug>(operator-convert-toggle-upper-lower)*
 operator-convert-case	operator-convert-case.txt	/*operator-convert-case*
+operator-convert-case-commands	operator-convert-case.txt	/*operator-convert-case-commands*
 operator-convert-case-contents	operator-convert-case.txt	/*operator-convert-case-contents*
 operator-convert-case-example	operator-convert-case.txt	/*operator-convert-case-example*
 operator-convert-case-introduction	operator-convert-case.txt	/*operator-convert-case-introduction*
