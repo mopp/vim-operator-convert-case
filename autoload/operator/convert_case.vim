@@ -39,6 +39,14 @@ function! s:to_upper_camel_case(str) abort
     return toupper(l:str[0]) . l:str[1 : -1]
 endfunction
 
+function! s:detect_word_case(word) abort
+    if stridx(a:word, '_') != -1
+        return (toupper(a:word) ==# a:word) ? 'UPPER_SNAKE_CASE' : 'lower_snake_case'
+    else
+        return (a:word[0] =~# '[a-z]') ? 'lowerCamelCase' : 'UpperCamelCase'
+    endif
+endfunction
+
 function! operator#convert_case#test() abort
     call assert_equal(s:to_lower_snake_case('lower_snake_case'), 'lower_snake_case')
     call assert_equal(s:to_lower_snake_case('UPPER_SNAKE_CASE'), 'upper_snake_case')
@@ -67,6 +75,11 @@ function! operator#convert_case#test() abort
     call assert_equal(s:to_upper_camel_case('lowerCamelCase'),   'LowerCamelCase')
     call assert_equal(s:to_upper_camel_case(''), '')
     call assert_equal(s:to_upper_camel_case('Up'), 'Up')
+
+    call assert_equal('lowerCamelCase', s:detect_word_case("someVariable"))
+    call assert_equal('UpperCamelCase', s:detect_word_case("SomeVar"))
+    call assert_equal('lower_snake_case', s:detect_word_case("this_is_var"))
+    call assert_equal('UPPER_SNAKE_CASE', s:detect_word_case("THIS_IS_VAR"))
 
     if len(v:errors)
         echoerr string(v:errors)
