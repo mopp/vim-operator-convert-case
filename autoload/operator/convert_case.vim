@@ -64,6 +64,15 @@ function! s:convert_to(case, word) abort
 endfunction
 
 
+function s:replace_word(word) abort
+    let save_cursor = getcurpos()
+
+    execute 'normal! ciw' . a:word
+
+    call setpos('.', save_cursor)
+endfunction
+
+
 function! operator#convert_case#test() abort
     call assert_equal(s:to_lower_snake_case('lower_snake_case'), 'lower_snake_case')
     call assert_equal(s:to_lower_snake_case('UPPER_SNAKE_CASE'), 'upper_snake_case')
@@ -106,34 +115,6 @@ function! operator#convert_case#test() abort
 endfunction
 
 
-function! operator#convert_case#toggle_case(word, case1, case2) abort
-    execute 'normal! diw'
-
-    let case = s:detect_word_case(a:word)
-    let converted = (a:case1 ==# case) ? s:convert_to(a:case2, a:word) : s:convert_to(a:case1, a:word)
-
-    execute 'normal! i' . converted
-endfunction
-
-
-let s:letter_mapper = {
-            \ 'lowerCamelCase': function('s:to_upper_camel_case'),
-            \ 'UpperCamelCase': function('s:to_lower_camel_case'),
-            \ 'lower_snake_case': function('s:to_upper_snake_case'),
-            \ 'UPPER_SNAKE_CASE': function('s:to_lower_snake_case'),
-            \ }
-
-function! operator#convert_case#toggle_upper_lower(word) abort
-    normal! diw
-
-    let case = s:detect_word_case(a:word)
-    let converted = s:letter_mapper[l:case](a:word)
-
-    execute 'normal! i' . converted
-    normal! b
-endfunction
-
-
 function! operator#convert_case#do(motion_wiseness) abort
     if a:motion_wiseness !=# 'char'
         echoerr 'This operator supports only characterwise.'
@@ -149,4 +130,34 @@ function! operator#convert_case#do(motion_wiseness) abort
     let @r = l:store
 
     execute 'normal! a' . s:convert_to(g:operator#convert_case#target_case, l:target_text)
+endfunction
+
+
+function! operator#convert_case#convert(word, case) abort
+    let converted = s:convert_to(a:case, a:word)
+
+    call s:replace_word(converted)
+endfunction
+
+
+function! operator#convert_case#toggle_case(word, case1, case2) abort
+    let case = s:detect_word_case(a:word)
+    let converted = (a:case1 ==# case) ? s:convert_to(a:case2, a:word) : s:convert_to(a:case1, a:word)
+
+    call s:replace_word(converted)
+endfunction
+
+
+let s:letter_mapper = {
+            \ 'lowerCamelCase': function('s:to_upper_camel_case'),
+            \ 'UpperCamelCase': function('s:to_lower_camel_case'),
+            \ 'lower_snake_case': function('s:to_upper_snake_case'),
+            \ 'UPPER_SNAKE_CASE': function('s:to_lower_snake_case'),
+            \ }
+
+function! operator#convert_case#toggle_upper_lower(word) abort
+    let case = s:detect_word_case(a:word)
+    let converted = s:letter_mapper[l:case](a:word)
+
+    call s:replace_word(converted)
 endfunction
