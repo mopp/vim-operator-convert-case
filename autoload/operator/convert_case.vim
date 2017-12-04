@@ -39,40 +39,40 @@ function! s:to_upper_camel_case(str) abort
     return toupper(l:str[0]) . l:str[1 : -1]
 endfunction
 
-function! s:assert_eq(x, y) abort
-    if a:x !=# a:y
-        echoerr a:x . ' !=# ' .a:y
+function! operator#convert_case#test() abort
+    call assert_equal(s:to_lower_snake_case('lower_snake_case'), 'lower_snake_case')
+    call assert_equal(s:to_lower_snake_case('UPPER_SNAKE_CASE'), 'upper_snake_case')
+    call assert_equal(s:to_lower_snake_case('UpperCamelCase'),   'upper_camel_case')
+    call assert_equal(s:to_lower_snake_case('lowerCamelCase'),   'lower_camel_case')
+    call assert_equal(s:to_lower_snake_case(''), '')
+    call assert_equal(s:to_lower_snake_case('Up'), 'up')
+
+    call assert_equal(s:to_upper_snake_case('lower_snake_case'), 'LOWER_SNAKE_CASE')
+    call assert_equal(s:to_upper_snake_case('UPPER_SNAKE_CASE'), 'UPPER_SNAKE_CASE')
+    call assert_equal(s:to_upper_snake_case('UpperCamelCase'),   'UPPER_CAMEL_CASE')
+    call assert_equal(s:to_upper_snake_case('lowerCamelCase'),   'LOWER_CAMEL_CASE')
+    call assert_equal(s:to_upper_snake_case(''), '')
+    call assert_equal(s:to_upper_snake_case('Up'), 'UP')
+
+    call assert_equal(s:to_lower_camel_case('lower_snake_case'), 'lowerSnakeCase')
+    call assert_equal(s:to_lower_camel_case('UPPER_SNAKE_CASE'), 'upperSnakeCase')
+    call assert_equal(s:to_lower_camel_case('UpperCamelCase'),   'upperCamelCase')
+    call assert_equal(s:to_lower_camel_case('lowerCamelCase'),   'lowerCamelCase')
+    call assert_equal(s:to_lower_camel_case(''), '')
+    call assert_equal(s:to_lower_camel_case('Up'), 'up')
+
+    call assert_equal(s:to_upper_camel_case('lower_snake_case'), 'LowerSnakeCase')
+    call assert_equal(s:to_upper_camel_case('UPPER_SNAKE_CASE'), 'UpperSnakeCase')
+    call assert_equal(s:to_upper_camel_case('UpperCamelCase'),   'UpperCamelCase')
+    call assert_equal(s:to_upper_camel_case('lowerCamelCase'),   'LowerCamelCase')
+    call assert_equal(s:to_upper_camel_case(''), '')
+    call assert_equal(s:to_upper_camel_case('Up'), 'Up')
+
+    if len(v:errors)
+        echoerr string(v:errors)
+    else
+        echomsg 'none'
     endif
-endfunction
-
-function! s:test() abort
-    call s:assert_eq(s:to_lower_snake_case('lower_snake_case'), 'lower_snake_case')
-    call s:assert_eq(s:to_lower_snake_case('UPPER_SNAKE_CASE'), 'upper_snake_case')
-    call s:assert_eq(s:to_lower_snake_case('UpperCamelCase'),   'upper_camel_case')
-    call s:assert_eq(s:to_lower_snake_case('lowerCamelCase'),   'lower_camel_case')
-    call s:assert_eq(s:to_lower_snake_case(''), '')
-    call s:assert_eq(s:to_lower_snake_case('Up'), 'up')
-
-    call s:assert_eq(s:to_upper_snake_case('lower_snake_case'), 'LOWER_SNAKE_CASE')
-    call s:assert_eq(s:to_upper_snake_case('UPPER_SNAKE_CASE'), 'UPPER_SNAKE_CASE')
-    call s:assert_eq(s:to_upper_snake_case('UpperCamelCase'),   'UPPER_CAMEL_CASE')
-    call s:assert_eq(s:to_upper_snake_case('lowerCamelCase'),   'LOWER_CAMEL_CASE')
-    call s:assert_eq(s:to_upper_snake_case(''), '')
-    call s:assert_eq(s:to_upper_snake_case('Up'), 'UP')
-
-    call s:assert_eq(s:to_lower_camel_case('lower_snake_case'), 'lowerSnakeCase')
-    call s:assert_eq(s:to_lower_camel_case('UPPER_SNAKE_CASE'), 'upperSnakeCase')
-    call s:assert_eq(s:to_lower_camel_case('UpperCamelCase'),   'upperCamelCase')
-    call s:assert_eq(s:to_lower_camel_case('lowerCamelCase'),   'lowerCamelCase')
-    call s:assert_eq(s:to_lower_camel_case(''), '')
-    call s:assert_eq(s:to_lower_camel_case('Up'), 'up')
-
-    call s:assert_eq(s:to_upper_camel_case('lower_snake_case'), 'LowerSnakeCase')
-    call s:assert_eq(s:to_upper_camel_case('UPPER_SNAKE_CASE'), 'UpperSnakeCase')
-    call s:assert_eq(s:to_upper_camel_case('UpperCamelCase'),   'UpperCamelCase')
-    call s:assert_eq(s:to_upper_camel_case('lowerCamelCase'),   'LowerCamelCase')
-    call s:assert_eq(s:to_upper_camel_case(''), '')
-    call s:assert_eq(s:to_upper_camel_case('Up'), 'Up')
 endfunction
 
 
