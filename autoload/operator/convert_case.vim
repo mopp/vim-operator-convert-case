@@ -12,9 +12,11 @@ function! s:to_lower_snake_case(str) abort
     endif
 endfunction
 
+
 function! s:to_upper_snake_case(str) abort
     return toupper(s:to_lower_snake_case(a:str))
 endfunction
+
 
 function! s:to_lower_camel_case(str) abort
     if empty(a:str) == 1
@@ -30,6 +32,7 @@ function! s:to_lower_camel_case(str) abort
     endif
 endfunction
 
+
 function! s:to_upper_camel_case(str) abort
     if empty(a:str) == 1
         return ''
@@ -39,6 +42,7 @@ function! s:to_upper_camel_case(str) abort
     return toupper(l:str[0]) . l:str[1 : -1]
 endfunction
 
+
 function! s:detect_word_case(word) abort
     if stridx(a:word, '_') != -1
         return (toupper(a:word) ==# a:word) ? 'UPPER_SNAKE_CASE' : 'lower_snake_case'
@@ -46,6 +50,19 @@ function! s:detect_word_case(word) abort
         return (a:word[0] =~# '[a-z]') ? 'lowerCamelCase' : 'UpperCamelCase'
     endif
 endfunction
+
+
+let s:function_mapper = {
+            \ 'lowerCamelCase': function('s:to_lower_camel_case'),
+            \ 'UpperCamelCase': function('s:to_upper_camel_case'),
+            \ 'lower_snake_case': function('s:to_lower_snake_case'),
+            \ 'UPPER_SNAKE_CASE': function('s:to_upper_snake_case'),
+            \ }
+
+function! s:convert_to(case, word) abort
+    return s:function_mapper[a:case](a:word)
+endfunction
+
 
 function! operator#convert_case#test() abort
     call assert_equal(s:to_lower_snake_case('lower_snake_case'), 'lower_snake_case')
@@ -89,13 +106,14 @@ function! operator#convert_case#test() abort
 endfunction
 
 
-let s:function_mapper = {
-            \ 'lowerCamelCase': function('s:to_lower_camel_case'),
-            \ 'UpperCamelCase': function('s:to_upper_camel_case'),
-            \ 'lower_snake_case': function('s:to_lower_snake_case'),
-            \ 'UPPER_SNAKE_CASE': function('s:to_upper_snake_case'),
-            \ }
+function! operator#convert_case#toggle_case(word, case1, case2) abort
+    execute 'normal! diw'
 
+    let case = s:detect_word_case(a:word)
+    let converted = (a:case1 ==# case) ? s:convert_to(a:case2, a:word) : s:convert_to(a:case1, a:word)
+
+    execute 'normal! i' . converted
+endfunction
 
 function! operator#convert_case#do(motion_wiseness) abort
     if a:motion_wiseness !=# 'char'
@@ -111,5 +129,5 @@ function! operator#convert_case#do(motion_wiseness) abort
 
     let @r = l:store
 
-    execute 'normal! a' . s:function_mapper[g:operator#convert_case#target_case](l:target_text)
+    execute 'normal! a' . s:convert_to(g:operator#convert_case#target_case, l:target_text)
 endfunction
