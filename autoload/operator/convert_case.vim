@@ -115,6 +115,25 @@ function! operator#convert_case#toggle_case(word, case1, case2) abort
     execute 'normal! i' . converted
 endfunction
 
+
+let s:letter_mapper = {
+            \ 'lowerCamelCase': function('s:to_upper_camel_case'),
+            \ 'UpperCamelCase': function('s:to_lower_camel_case'),
+            \ 'lower_snake_case': function('s:to_upper_snake_case'),
+            \ 'UPPER_SNAKE_CASE': function('s:to_lower_snake_case'),
+            \ }
+
+function! operator#convert_case#toggle_upper_lower(word) abort
+    normal! diw
+
+    let case = s:detect_word_case(a:word)
+    let converted = s:letter_mapper[l:case](a:word)
+
+    execute 'normal! i' . converted
+    normal! b
+endfunction
+
+
 function! operator#convert_case#do(motion_wiseness) abort
     if a:motion_wiseness !=# 'char'
         echoerr 'This operator supports only characterwise.'
