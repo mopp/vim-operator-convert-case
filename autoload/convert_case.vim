@@ -68,11 +68,6 @@ function s:replace_word(word) abort
 endfunction
 
 
-function! convert_case#convert_to(case, word) abort
-    return s:function_mapper[a:case](a:word)
-endfunction
-
-
 function! convert_case#test() abort
     call assert_equal(s:to_lower_snake_case('lower_snake_case'), 'lower_snake_case')
     call assert_equal(s:to_lower_snake_case('UPPER_SNAKE_CASE'), 'upper_snake_case')
@@ -112,6 +107,16 @@ function! convert_case#test() abort
     else
         echomsg 'none'
     endif
+endfunction
+
+
+function! convert_case#case_list(...) abort
+    return ['lower_snake_case', 'UPPER_SNAKE_CASE', 'lowerCamelCase', 'UpperCamelCase']
+endfunction
+
+
+function! convert_case#convert_to(case, word) abort
+    return s:function_mapper[a:case](a:word)
 endfunction
 
 
