@@ -35,7 +35,7 @@ function! s:map_convert() abort
 
     let s:last_used_case = input('target case: ', '', 'customlist,ConvertCaseCustomList')
 
-    call operator#convert_case#convert(expand('<cword>'), s:last_used_case)
+    call convert_case#replace_by(s:last_used_case, expand('<cword>'))
 
     if exists('*repeat')
         call repeat#set("\<Plug>(operator-convert-dummy)")
@@ -46,7 +46,7 @@ endfunction
 
 
 function! s:map_dummy() abort
-    call operator#convert_case#convert(expand('<cword>'), s:last_used_case)
+    call convert_case#replace_by(s:last_used_case, expand('<cword>'))
 
     if exists('*repeat')
         call repeat#set("\<Plug>(operator-convert-dummy)")
@@ -54,11 +54,12 @@ function! s:map_dummy() abort
 endfunction
 
 
-command! -nargs=0 ConvertTest call operator#convert_case#test()
-command! -nargs=0 ToggleUpperLower call operator#convert_case#toggle_upper_lower(expand('<cword>'))
-command! -nargs=1 -complete=customlist,ConvertCaseCustomList ConvertCase call operator#convert_case#convert(expand('<cword>'), <f-args>)
+command! -nargs=0 ConvertTest call convert_case#test()
+command! -nargs=0 ToggleUpperLower call convert_case#toggle_upper_lower(expand('<cword>'))
+command! -nargs=1 -complete=customlist,ConvertCaseCustomList ConvertCase call convert_case#replace(expand('<cword>'), <f-args>)
 
 nnoremap <script> <Plug>(operator-convert-dummy) :<C-U>call <SID>map_dummy()<CR>
+
 nnoremap <script> <Plug>(operator-convert-convert) :<C-U>call <SID>map_convert()<CR>
 nnoremap <script> <Plug>(operator-convert-toggle-upper-lower) :<C-U>call <SID>map_toggle_upper_lower()<CR>
 
