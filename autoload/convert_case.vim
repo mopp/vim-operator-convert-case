@@ -52,19 +52,12 @@ function! s:detect_word_case(word) abort
 endfunction
 
 
-let s:function_mapper = {
-            \ 'lowerCamelCase': function('s:to_lower_camel_case'),
-            \ 'UpperCamelCase': function('s:to_upper_camel_case'),
-            \ 'lower_snake_case': function('s:to_lower_snake_case'),
-            \ 'UPPER_SNAKE_CASE': function('s:to_upper_snake_case'),
-            \ }
-
-function s:replace_word(word) abort
-    let save_cursor = getcurpos()
+function! s:replace_word(word) abort
+    let l:save_cursor = getcurpos()
 
     execute 'normal! ciw' . a:word
 
-    call setpos('.', save_cursor)
+    call setpos('.', l:save_cursor)
 endfunction
 
 
@@ -97,10 +90,10 @@ function! convert_case#test() abort
     call assert_equal(s:to_upper_camel_case(''), '')
     call assert_equal(s:to_upper_camel_case('Up'), 'Up')
 
-    call assert_equal('lowerCamelCase', s:detect_word_case("someVariable"))
-    call assert_equal('UpperCamelCase', s:detect_word_case("SomeVar"))
-    call assert_equal('lower_snake_case', s:detect_word_case("this_is_var"))
-    call assert_equal('UPPER_SNAKE_CASE', s:detect_word_case("THIS_IS_VAR"))
+    call assert_equal('lowerCamelCase', s:detect_word_case('someVariable'))
+    call assert_equal('UpperCamelCase', s:detect_word_case('SomeVar'))
+    call assert_equal('lower_snake_case', s:detect_word_case('this_is_var'))
+    call assert_equal('UPPER_SNAKE_CASE', s:detect_word_case('THIS_IS_VAR'))
 
     if len(v:errors)
         echoerr string(v:errors)
@@ -116,22 +109,29 @@ endfunction
 
 
 function! convert_case#convert_to(case, word) abort
-    return s:function_mapper[a:case](a:word)
+    let l:function_map =  {
+                \ 'lowerCamelCase': function('s:to_lower_camel_case'),
+                \ 'UpperCamelCase': function('s:to_upper_camel_case'),
+                \ 'lower_snake_case': function('s:to_lower_snake_case'),
+                \ 'UPPER_SNAKE_CASE': function('s:to_upper_snake_case'),
+                \ }
+
+    return l:function_map[a:case](a:word)
 endfunction
 
 
 function! convert_case#replace_by(case, word) abort
-    let converted = convert_case#convert_to(a:case, a:word)
+    let l:converted = convert_case#convert_to(a:case, a:word)
 
-    call s:replace_word(converted)
+    call s:replace_word(l:converted)
 endfunction
 
 
 function! convert_case#toggle_case(word, case1, case2) abort
-    let case = s:detect_word_case(a:word)
-    let converted = (a:case1 ==# case) ? convert_case#convert_to(a:case2, a:word) : convert_case#convert_to(a:case1, a:word)
+    let l:case = s:detect_word_case(a:word)
+    let l:converted = (a:case1 ==# l:case) ? convert_case#convert_to(a:case2, a:word) : convert_case#convert_to(a:case1, a:word)
 
-    call s:replace_word(converted)
+    call s:replace_word(l:converted)
 endfunction
 
 
@@ -143,20 +143,20 @@ let s:letter_mapper = {
             \ }
 
 function! convert_case#toggle_upper_lower(word) abort
-    let case = s:detect_word_case(a:word)
-    let converted = s:letter_mapper[l:case](a:word)
+    let l:case = s:detect_word_case(a:word)
+    let l:converted = s:letter_mapper[l:case](a:word)
 
-    call s:replace_word(converted)
+    call s:replace_word(l:converted)
 endfunction
 
 
 function! convert_case#loop(word) abort
-    let case = s:detect_word_case(a:word)
+    let l:case = s:detect_word_case(a:word)
 
-    let all_cases = convert_case#case_list()
-    let i = (index(all_cases, case) + 1) % len(all_cases)
-    let next_case = all_cases[i]
+    let l:all_cases = convert_case#case_list()
+    let l:i = (index(l:all_cases, l:case) + 1) % len(l:all_cases)
+    let l:next_case = l:all_cases[l:i]
 
-    let converted = convert_case#convert_to(next_case, a:word)
-    call s:replace_word(converted)
+    let l:converted = convert_case#convert_to(l:next_case, a:word)
+    call s:replace_word(l:converted)
 endfunction

@@ -11,8 +11,8 @@ if exists('g:loaded_operator_convert_case')
 endif
 let g:loaded_operator_convert_case = 1
 
-let s:save_cpo = &cpo
-set cpo&vim
+let s:save_cpo = &cpoptions
+set cpoptions&vim
 
 
 function! s:map_toggle_upper_lower() abort
@@ -30,7 +30,7 @@ function! s:map_convert() abort
 
     let s:last_used_case = input('target case: ', '', 'customlist,convert_case#case_list')
 
-    if s:last_used_case == ''
+    if s:last_used_case ==# ''
         return
     endif
 
@@ -64,5 +64,5 @@ nnoremap <script> <Plug>(operator-convert-convert) :<C-U>call <SID>map_convert()
 nnoremap <script> <Plug>(operator-convert-toggle-upper-lower) :<C-U>call <SID>map_toggle_upper_lower()<CR>
 
 
-let &cpo = s:save_cpo
+let &cpoptions = s:save_cpo
 unlet s:save_cpo
