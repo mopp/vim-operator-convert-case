@@ -148,3 +148,15 @@ function! convert_case#toggle_upper_lower(word) abort
 
     call s:replace_word(converted)
 endfunction
+
+
+function! convert_case#loop(word) abort
+    let case = s:detect_word_case(a:word)
+
+    let all_cases = convert_case#case_list()
+    let i = (index(all_cases, case) + 1) % len(all_cases)
+    let next_case = all_cases[i]
+
+    let converted = convert_case#convert_to(next_case, a:word)
+    call s:replace_word(converted)
+endfunction

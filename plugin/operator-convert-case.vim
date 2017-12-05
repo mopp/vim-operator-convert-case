@@ -56,6 +56,7 @@ endfunction
 command! -nargs=0 ConvertTest call convert_case#test()
 command! -nargs=0 ToggleUpperLower call convert_case#toggle_upper_lower(expand('<cword>'))
 command! -nargs=1 -complete=customlist,convert_case#case_list ConvertCase call convert_case#replace(expand('<cword>'), <f-args>)
+command! -nargs=0 LoopCase call convert_case#loop(expand('<cword>'))
 
 nnoremap <script> <Plug>(operator-convert-dummy) :<C-U>call <SID>map_dummy()<CR>
 
