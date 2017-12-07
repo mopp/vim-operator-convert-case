@@ -58,8 +58,8 @@ endfunction
 
 command! -nargs=0 ConvertTest call convert_case#test()
 
-command! -nargs=0 LoopCase execute "normal \<Plug>(operator-convert-case-loop)iw"
-command! -nargs=0 ToggleUpperLower execute "normal \<Plug>(operator-convert-case-toggle-upper-lower)iw"
+command! -nargs=0 ConvertCaseLoop execute "normal \<Plug>(operator-convert-case-loop)iw"
+command! -nargs=0 ConvertCaseToggleUpperLower execute "normal \<Plug>(operator-convert-case-toggle-upper-lower)iw"
 command! -nargs=1 -complete=customlist,convert_case#case_list ConvertCase call <SID>replace_word(<f-args>)
 
 nnoremap <script> <Plug>(operator-convert-case-convert) :<C-U>call <SID>map_convert()<CR>
