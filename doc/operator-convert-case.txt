@@ -70,14 +70,17 @@ MAPPINGS                                      *operator-convert-case-mappings*
 <Plug>(operator-convert-case-upper-snake){motion} *<Plug>(operator-convert-case-upper-snake)*
     Convert text that {motion} into upper_snake_case.
 
-<Plug>(operator-convert-convert) *<Plug>(operator-convert-convert)*
-    See |:ConvertCase|
-    This commands supports . command using |vim-repeat|.
-
-<Plug>(operator-convert-toggle-upper-lower) *<Plug>(operator-convert-toggle-upper-lower)*
+<Plug>(operator-convert-case-toggle-upper-lower) *<Plug>(operator-convert-case-toggle-upper-lower)*
     See |:ToggleUpperLower|
     This commands supports . command using |vim-repeat|.
 
+<Plug>(operator-convert-case-loop) *<Plug>(operator-convert-case-loop)*
+    See |:ToggleUpperLower|
+    This commands supports . command using |vim-repeat|.
+
+<Plug>(operator-convert-case-convert) *<Plug>(operator-convert-case-convert)*
+    See |:ConvertCase|
+    This commands supports . command using |vim-repeat|.
 
 
 
@@ -85,14 +88,16 @@ MAPPINGS                                      *operator-convert-case-mappings*
 COMMANDS                                        *operator-convert-case-commands*
 
                                                 *:ToggleUpperLower*
-:ToggleUpperLower
+:ConvertCaseToggleUpperLower
     Toggle the word under the cursor between Upper case and lower case.
+
+                                                *:ConvertCaseLoop*
+:ConvertCaseLoop
+    Loop the case of the word the cursor.
 
                                                 *:ConvertCase*
 :ConvertCase
-    Convert the case of the word.
-
-
+    Convert the case of the word under the cursor.
 
 
 ==============================================================================
@@ -104,6 +109,9 @@ Here is an mapping example.
     nmap <Leader>,cu <Plug>(operator-convert-case-upper-camel)
     nmap <Leader>,sl <Plug>(operator-convert-case-lower-snake)
     nmap <Leader>,su <Plug>(operator-convert-case-upper-snake)
+    nmap <Leader>,tt <Plug>(operator-convert-case-toggle-upper-lower)
+    nmap <Leader>,ll <Plug>(convert-case-loop)
+    nmap <Leader>,cc <Plug>(operator-convert-case-convert)
 <
 
 

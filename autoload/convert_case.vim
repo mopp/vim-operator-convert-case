@@ -120,33 +120,22 @@ function! convert_case#convert_to(case, word) abort
 endfunction
 
 
-function! convert_case#replace_by(case, word) abort
-    let l:converted = convert_case#convert_to(a:case, a:word)
-
-    call s:replace_word(l:converted)
-endfunction
-
-
 function! convert_case#toggle_case(word, case1, case2) abort
     let l:case = s:detect_word_case(a:word)
-    let l:converted = (a:case1 ==# l:case) ? convert_case#convert_to(a:case2, a:word) : convert_case#convert_to(a:case1, a:word)
-
-    call s:replace_word(l:converted)
+    return (a:case1 ==# l:case) ? convert_case#convert_to(a:case2, a:word) : convert_case#convert_to(a:case1, a:word)
 endfunction
 
 
-let s:letter_mapper = {
+function! convert_case#toggle_upper_lower(word) abort
+    let l:function_map = {
             \ 'lowerCamelCase': function('s:to_upper_camel_case'),
             \ 'UpperCamelCase': function('s:to_lower_camel_case'),
             \ 'lower_snake_case': function('s:to_upper_snake_case'),
             \ 'UPPER_SNAKE_CASE': function('s:to_lower_snake_case'),
             \ }
 
-function! convert_case#toggle_upper_lower(word) abort
     let l:case = s:detect_word_case(a:word)
-    let l:converted = s:letter_mapper[l:case](a:word)
-
-    call s:replace_word(l:converted)
+    return l:function_map[l:case](a:word)
 endfunction
 
 
@@ -157,6 +146,5 @@ function! convert_case#loop(word) abort
     let l:i = (index(l:all_cases, l:case) + 1) % len(l:all_cases)
     let l:next_case = l:all_cases[l:i]
 
-    let l:converted = convert_case#convert_to(l:next_case, a:word)
-    call s:replace_word(l:converted)
+    return convert_case#convert_to(l:next_case, a:word)
 endfunction
